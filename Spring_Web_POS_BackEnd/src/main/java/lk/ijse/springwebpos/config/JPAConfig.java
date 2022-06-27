@@ -18,6 +18,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 
 @Configuration
+@EnableJpaRepositories(basePackages = "lk.ijse.springwebpos.repo")
+@EnableTransactionManagement
+@PropertySource("classpath:Application.properties")
 
 public class JPAConfig {
 
