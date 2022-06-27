@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Spring_Web_POS_BackEnd:war">
+    <output-path>$PROJECT_DIR$/Spring_Web_POS_BackEnd/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>false</exploded>
+        <module>Spring_Web_POS_BackEnd</module>
+        <packaging>war</packaging>
+        <unpackNestedArchives>false</unpackNestedArchives>
+      </options>
+    </properties>
+    <root id="archive" name="Spring_Web_POS_BackEnd-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Spring_Web_POS_BackEnd:war exploded" />
+    </root>
+  </artifact>
+</component>
