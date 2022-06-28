@@ -201,12 +201,15 @@ function saveCustomer(){
 
     var data = $("#customerForm").serialize();
     $.ajax({
-        // url: "http://localhost:8080/pos/customer",
+         url: "http://localhost:8080/Spring_Web_POS_BackEnd_war/Customer",
         method:"POST",
       data:data,
         success:function (add){
-            alert(add.data);
-            loadAllCustomer();
+             if(add.code==200){
+                 alert("Saved Customer Data...");
+                 loadAllCustomer();
+             }
+
 
         }
     })
@@ -224,7 +227,7 @@ function loadAllCustomer(){
   $("#selecterow").empty();
 
   $.ajax({
-    // url: "http://localhost:8080/pos/customer",
+   // url: "http://localhost:8080/Spring_Web_POS_BackEnd_war/Customer",
     method:"GET",
     success:function (load){
 

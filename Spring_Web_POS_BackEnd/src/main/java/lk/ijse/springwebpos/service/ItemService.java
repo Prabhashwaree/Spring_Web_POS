@@ -9,9 +9,9 @@ public interface ItemService {
 
     List<ItemDTO> getAllItem();
 
-    void deleteItem(String id);
+    void deleteItem(String code);
 
     void updateItem(ItemDTO entity);
 
-    ItemDTO searchItem(String id);
+    ItemDTO searchItem(String code);
 }
