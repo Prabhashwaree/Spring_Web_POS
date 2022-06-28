@@ -1,4 +1,8 @@
 package lk.ijse.springwebpos.repo;
 
-public interface ItemRepo {
+import lk.ijse.springwebpos.entity.Item;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ItemRepo extends JpaRepository<Item, String> {
+
 }
