@@ -39,10 +39,10 @@ public class JPAConfig {
     @Bean
     public DataSource dataSource(){
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-        driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/jpawebpos?createDatabaseIfNotExist=true");
-        driverManagerDataSource.setUsername("my.app.username=root");
-        driverManagerDataSource.setPassword("my.app.password");
-        driverManagerDataSource.setDriverClassName("my.app.driverclassname");
+        driverManagerDataSource.setUrl(env.getRequiredProperty("my.app.url"));
+        driverManagerDataSource.setUsername(env.getRequiredProperty("my.app.username"));
+        driverManagerDataSource.setPassword(env.getRequiredProperty("my.app.password"));
+        driverManagerDataSource.setDriverClassName(env.getRequiredProperty("my.app.driverclassname"));
         return driverManagerDataSource;
     }
 

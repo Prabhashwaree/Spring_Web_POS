@@ -201,7 +201,7 @@ function saveCustomer(){
 
     var data = $("#customerForm").serialize();
     $.ajax({
-        url: "http://localhost:8080/pos/customer",
+        // url: "http://localhost:8080/pos/customer",
         method:"POST",
       data:data,
         success:function (add){
@@ -224,19 +224,19 @@ function loadAllCustomer(){
   $("#selecterow").empty();
 
   $.ajax({
-    url: "http://localhost:8080/pos/customer",
+    // url: "http://localhost:8080/pos/customer",
     method:"GET",
     success:function (load){
 
 
-      for(var i of load.data){
-
-        let data=`<tr><td>${i.id}</td>
-    <td>${i.name}</td>
-    <td>${i.address}</td>
-    <td>${i.salary}</td></tr>`
-        $('#selecterow').append(data);
-      }
+    //   for(var i of load.data){
+    //
+    //     let data=`<tr><td>${i.id}</td>
+    // <td>${i.name}</td>
+    // <td>${i.address}</td>
+    // <td>${i.salary}</td></tr>`
+    //     $('#selecterow').append(data);
+    //   }
       buttonFunctionCliceEvent();
 
     }
@@ -281,7 +281,7 @@ $("#btnCustomerSave").click(function () {
     let cusId = $("#txtCustomerId").val();
 
     $.ajax({
-      url: "http://localhost:8080/pos/customer?Cus_ID"+cusId,
+      // url: "http://localhost:8080/pos/customer?Cus_ID"+cusId,
       method:"DELETE",
       success:function (dele){
 
@@ -313,7 +313,7 @@ $("#updateCustomer").click(function(){
   }
 
    $.ajax({
-     url: "http://localhost:8080/pos/customer",
+     // url: "http://localhost:8080/pos/customer",
      method:"PUT",
      contentType:"application/json",
      data: JSON.stringify(custOb),

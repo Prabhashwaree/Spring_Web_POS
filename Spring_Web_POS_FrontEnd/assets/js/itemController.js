@@ -190,7 +190,7 @@ function searchItem(code){
 function saveItem(){
     var data = $("#itemForm").serialize();
     $.ajax({
-        url: "http://localhost:8080/pos/item",
+        // url: "http://localhost:8080/pos/item",
         method:"POST",
         data:data,
         success:function (add){
@@ -212,19 +212,19 @@ function loadAllItem(){
   $("#selecterowItem").empty();
 
     $.ajax({
-        url: "http://localhost:8080/pos/item",
+        // url: "http://localhost:8080/pos/item",
         method:"GET",
         success:function (load){
 
-            for(var i of load.data){
-
-                let itemData=`<tr><td>${i.itemCode}</td>
-                <td>${i.itemName}</td>
-                <td>${i.price}</td>
-                <td>${i.qty}</td>
-               </tr>`
-                            $('#selecterowItem').append(itemData);
-            }
+            // for(var i of load.data){
+            //
+            //     let itemData=`<tr><td>${i.itemCode}</td>
+            //     <td>${i.itemName}</td>
+            //     <td>${i.price}</td>
+            //     <td>${i.qty}</td>
+            //    </tr>`
+            //                 $('#selecterowItem').append(itemData);
+            // }
             buttonCliceEvent();
         }
     })
@@ -279,7 +279,7 @@ $(".deleteItem").click(function (){
     let code = $("#txtItemCode").val();
 
     $.ajax({
-        url: "http://localhost:8080/pos/item?itemCode"+code,
+        // url: "http://localhost:8080/pos/item?itemCode"+code,
         method:"DELETE",
         success:function (dele){
 
