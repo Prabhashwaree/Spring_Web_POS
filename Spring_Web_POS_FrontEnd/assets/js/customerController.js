@@ -211,6 +211,8 @@ function saveCustomer(){
              }
 
 
+        },error: function (ob) {
+            alert(ob.responseJSON.message);
         }
     })
 
@@ -223,23 +225,48 @@ function  customerFirstLoad(){
 
 }
 
+
+// ----delete------
+
+$("#btnCustomerDelete").click(function (){
+    let cusId = $("#txtCustomerId").val();
+    alert("button ok");
+    $.ajax({
+        url: "http://localhost:8080/Spring_Web_POS_BackEnd_war/Customer?id="+cusId,
+        method:"DELETE",
+        success:function (dele){
+
+            if (dele.code==200){
+                alert("Deleted customer...");
+                loadAllCustomer();
+
+            }
+        },error: function (ob) {
+            alert(ob.responseJSON.message);
+        }
+    })
+})
+
+
+
+
 function loadAllCustomer(){
   $("#selecterow").empty();
 
   $.ajax({
-   // url: "http://localhost:8080/Spring_Web_POS_BackEnd_war/Customer",
+   url: "http://localhost:8080/Spring_Web_POS_BackEnd_war/Customer",
     method:"GET",
     success:function (load){
 
 
-    //   for(var i of load.data){
-    //
-    //     let data=`<tr><td>${i.id}</td>
-    // <td>${i.name}</td>
-    // <td>${i.address}</td>
-    // <td>${i.salary}</td></tr>`
-    //     $('#selecterow').append(data);
-    //   }
+      for(var i of load.data){
+
+        let data=`<tr><td>${i.custID}</td>
+    <td>${i.custName}</td>
+    <td>${i.custAddress}</td>
+    <td>${i.salary}</td></tr>`
+        $('#selecterow').append(data);
+      }
       buttonFunctionCliceEvent();
 
     }
@@ -278,34 +305,8 @@ $("#btnCustomerSave").click(function () {
 
 
 
-// ----delete------
-
-  $(".deleteCustomer").click(function (){
-    let cusId = $("#txtCustomerId").val();
-
-    $.ajax({
-      // url: "http://localhost:8080/pos/customer?Cus_ID"+cusId,
-      method:"DELETE",
-      success:function (dele){
-
-        if (dele.status==200){
-            alert(dele.message);
-          loadAllCustomer();
-
-        }else if(dele.status==400){
-          alert(dele.data);
-
-        }else {
-          alert(dele.data);
-        }
-      }
-    })
-  })
-
-
-
 //-------UpdateCustomer---------
-$("#updateCustomer").click(function(){
+$("#btnCustomerUpdate").click(function(){
   // console.log("Enter");
 
   var custOb = {
@@ -316,24 +317,22 @@ $("#updateCustomer").click(function(){
   }
 
    $.ajax({
-     // url: "http://localhost:8080/pos/customer",
+     url: "http://localhost:8080/Spring_Web_POS_BackEnd_war/Customer",
      method:"PUT",
      contentType:"application/json",
      data: JSON.stringify(custOb),
      success:function (updates){
 
 
-       if(updates.status==200){
-            alert(updates.message);
+       if(updates.code==200){
+            alert("Successfully Update Customer... ");
             loadAllCustomer();
 
-       }else if(updates.status==400){
-         alert(updates.message);
-
-       }else {
-         alert(updates.data);
        }
-     }
+     },error: function (ob) {
+           alert(ob.responseJSON.message);
+       }
+
    })
     loadAllCustomer();
 
