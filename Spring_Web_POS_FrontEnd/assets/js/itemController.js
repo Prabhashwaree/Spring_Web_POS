@@ -190,16 +190,43 @@ function searchItem(code){
 function saveItem(){
     var data = $("#itemForm").serialize();
     $.ajax({
-        // url: "http://localhost:8080/pos/item",
+        url: "http://localhost:8080/Spring_Web_POS_BackEnd_war/Item",
         method:"POST",
         data:data,
         success:function (add){
-            alert(add.data);
-            loadAllItem();
-
+            if(add.code==200){
+                alert("Saved Item Data...");
+                loadAllItem();
+            }
+        },error: function (ob) {
+            alert(ob.responseJSON.message);
         }
     })
 }
+
+
+
+//-------DeleteItem---------
+
+$("#btnItemDelete").click(function (){
+    let code = $("#txtItemCode").val();
+alert("button ok");
+    $.ajax({
+       url: "http://localhost:8080/Spring_Web_POS_BackEnd_war/Item?code="+code,
+        method:"DELETE",
+        success:function (dele){
+
+            if (dele.code==200){
+                alert("Deleted customer...");
+                loadAllItem();
+
+            }
+        },error: function (ob) {
+            alert(ob.responseJSON.message);
+        }
+    })
+})
+
 
 
 
@@ -212,19 +239,19 @@ function loadAllItem(){
   $("#selecterowItem").empty();
 
     $.ajax({
-        // url: "http://localhost:8080/pos/item",
+        url: "http://localhost:8080/Spring_Web_POS_BackEnd_war/Item",
         method:"GET",
         success:function (load){
 
-            // for(var i of load.data){
-            //
-            //     let itemData=`<tr><td>${i.itemCode}</td>
-            //     <td>${i.itemName}</td>
-            //     <td>${i.price}</td>
-            //     <td>${i.qty}</td>
-            //    </tr>`
-            //                 $('#selecterowItem').append(itemData);
-            // }
+            for(var i of load.data){
+
+                let itemData=`<tr><td>${i.iCode}</td>
+                <td>${i.itName}</td>
+                <td>${i.iPrice}</td>
+                <td>${i.iQuantity}</td>
+               </tr>`
+                            $('#selecterowItem').append(itemData);
+            }
             buttonCliceEvent();
         }
     })
@@ -273,29 +300,6 @@ $(".updateItems").click(function(){
 })
 
 
-//-------DeleteItem---------
-
-$(".deleteItem").click(function (){
-    let code = $("#txtItemCode").val();
-
-    $.ajax({
-        // url: "http://localhost:8080/pos/item?itemCode"+code,
-        method:"DELETE",
-        success:function (dele){
-
-            if (dele.status==200){
-                alert(dele.message);
-                loadAllItem();
-
-            }else if(dele.status==400){
-                alert(dele.data);
-
-            }else {
-                alert(dele.data);
-            }
-        }
-    })
-})
 
 
 //-------UpdateItem---------
