@@ -250,6 +250,42 @@ $("#btnCustomerDelete").click(function (){
 
 
 
+//-------UpdateCustomer---------
+$("#btnCustomerUpdate").click(function(){
+    // console.log("Enter");
+    alert("button Ok update")
+
+    var custOb = {
+        custID : $("#txtCustomerId").val(),
+        custName : $("#txtCustomerName").val(),
+        custAddress : $("#txtCustomerAddress").val(),
+        salary : $("#txtCustomerSalary").val()
+    }
+
+    $.ajax({
+        url: "http://localhost:8080/Spring_Web_POS_BackEnd_war/Customer",
+        method:"PUT",
+        contentType:"application/json",
+        data: JSON.stringify(custOb),
+        success:function (updates){
+
+
+            if(updates.code==200){
+                alert("Successfully Update Customer... ");
+                loadAllCustomer();
+
+            }
+        },error: function (ob) {
+            alert(ob.responseJSON.message);
+        }
+
+    })
+    loadAllCustomer();
+
+})
+
+
+
 function loadAllCustomer(){
   $("#selecterow").empty();
 
@@ -302,41 +338,6 @@ $("#btnCustomerSave").click(function () {
   $("#txtCustomerAddress").css('border','black');
   $("#txtCustomerSalary").css('border','black');
 
-
-
-
-//-------UpdateCustomer---------
-$("#btnCustomerUpdate").click(function(){
-  // console.log("Enter");
-
-  var custOb = {
-      cusId : $("#txtCustomerId").val(),
-      cusName : $("#txtCustomerName").val(),
-      cusAddress : $("#txtCustomerAddress").val(),
-      cusSalary : $("#txtCustomerSalary").val()
-  }
-
-   $.ajax({
-     url: "http://localhost:8080/Spring_Web_POS_BackEnd_war/Customer",
-     method:"PUT",
-     contentType:"application/json",
-     data: JSON.stringify(custOb),
-     success:function (updates){
-
-
-       if(updates.code==200){
-            alert("Successfully Update Customer... ");
-            loadAllCustomer();
-
-       }
-     },error: function (ob) {
-           alert(ob.responseJSON.message);
-       }
-
-   })
-    loadAllCustomer();
-
-})
 
 
 

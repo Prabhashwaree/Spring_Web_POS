@@ -4,6 +4,7 @@ import lk.ijse.springwebpos.dto.CustomerDTO;
 import lk.ijse.springwebpos.service.CustomerService;
 import lk.ijse.springwebpos.util.ResponceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
@@ -16,14 +17,14 @@ public class CustomerController {
     @Autowired
     CustomerService customerService;
 
-
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponceUtil saveCustomer(@ModelAttribute CustomerDTO cusDTO){
         customerService.saveCustomer(cusDTO);
         return new ResponceUtil(200,"save",null);
     }
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponceUtil getAllCustomer(){
         return  new ResponceUtil(200,"getAll",customerService.getAllCustomer());
     }
@@ -34,6 +35,7 @@ public class CustomerController {
         return new ResponceUtil(200,"deleted",null);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponceUtil updateCustomer(@RequestBody CustomerDTO cusDTO){
         customerService.updateCustomer(cusDTO);

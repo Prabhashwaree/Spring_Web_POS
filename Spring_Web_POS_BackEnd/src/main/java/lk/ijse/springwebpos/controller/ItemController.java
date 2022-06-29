@@ -23,7 +23,7 @@ public class ItemController {
         return new ResponceUtil(200,"saved",null);
     }
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponceUtil getAllItem(){
         return new ResponceUtil(200,"getAll",itemService.getAllItem());
 

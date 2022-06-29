@@ -230,6 +230,45 @@ alert("button ok");
 
 
 
+//-------Update Item---------
+
+$("#btnItemUpdate").click(function(){
+    // console.log("Enter");
+    alert("button Ok update")
+
+    var itemOb = {
+        itemCode : $("#txtItemCode").val(),
+        itemName : $("#txtItemName").val(),
+        price : $("#txtItemPrice").val(),
+        qty : $("#txtItemQuantity").val()
+    }
+
+    $.ajax({
+        url: "http://localhost:8080/Spring_Web_POS_BackEnd_war/Item",
+        method:"PUT",
+        contentType:"application/json",
+        data: JSON.stringify(itemOb),
+        success:function (updates){
+
+
+            if(updates.code==200){
+                alert("Successfully Update Item... ");
+                loadAllItem();
+
+            }
+        },error: function (ob) {
+            alert(ob.responseJSON.message);
+        }
+
+    })
+    loadAllItem();
+
+})
+
+
+
+
+
 function itemFirstLoad(){
     loadAllItem();
 }
@@ -245,10 +284,10 @@ function loadAllItem(){
 
             for(var i of load.data){
 
-                let itemData=`<tr><td>${i.iCode}</td>
-                <td>${i.itName}</td>
-                <td>${i.iPrice}</td>
-                <td>${i.iQuantity}</td>
+                let itemData=`<tr><td>${i.itemCode}</td>
+                <td>${i.itemName}</td>
+                <td>${i.price}</td>
+                <td>${i.qty}</td>
                </tr>`
                             $('#selecterowItem').append(itemData);
             }
@@ -302,7 +341,8 @@ $(".updateItems").click(function(){
 
 
 
-//-------UpdateItem---------
+
+
 
  $("#btnItemSave").click(function () {
 

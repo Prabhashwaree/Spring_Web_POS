@@ -32,7 +32,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     public List<ItemDTO> getAllItem() {
-        return modelMapper.map(itemRepo.findAll(),new TypeToken<List<CustomerDTO>>(){}.getType());
+        return modelMapper.map(itemRepo.findAll(),new TypeToken<List<ItemDTO>>(){}.getType());
     }
 
     public void deleteItem(String code) {
