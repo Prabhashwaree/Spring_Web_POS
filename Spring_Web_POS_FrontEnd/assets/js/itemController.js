@@ -158,33 +158,9 @@ $("#txtItemQuantity").keyup(function(){
 })
 
 
-$("#search1").keyup(function(event){
-  var searchItemId=$("#search1").val();
-  var responceId=searchItem(searchItemId);
-
-  if(event.key=="Enter"){
-   
-    if(responceId){
-      $("#txtItemCode").val(responceId.getItemCode());
-        $("#txtItemName").val(responceId.getItemName());
-        $("#txtItemPrice").val(responceId.getItemPrice());
-        $("#txtItemQuantity").val(responceId.getItemQuantity());
-
-    }else{
-      // alert("hi");
-    }
-
-  }
-})
 
 
-function searchItem(code){
-  for(let i=0;i<ItemDB.length;i++){
-    if(ItemDB[i].getItemCode()==code){
-      return ItemDB[i];
-    }
-  }
-}
+
 
 
 function saveItem(){
@@ -203,6 +179,7 @@ function saveItem(){
         }
     })
 }
+
 
 
 
@@ -226,6 +203,40 @@ alert("button ok");
         }
     })
 })
+
+
+
+//-------Search Item---------
+
+$("#txtItemCode").on("keypress", function (e) {
+    if (e.key == "Enter") {
+        alert("search enter ok");
+        searchItem();
+    }
+});
+
+function searchItem(){
+    var itemCode = $("#txtItemCode").val();
+    $.ajax({
+        url:"http://localhost:8080/Spring_Web_POS_BackEnd_war/Item" + "/" + itemCode,
+        method:"GET",
+        success:function (search){
+            if(search.code==200){
+                var item=search.data;
+
+                $("#txtItemCode").val(item.itemCode);
+                $("#txtItemName").val(item.itemName);
+                $("#txtItemPrice").val(item.price);
+                $("#txtItemQuantity").val(item.qty)
+            }
+
+        },error: function (ob) {
+            alert(ob.responseJSON.message);
+        }
+
+    })
+}
+
 
 
 

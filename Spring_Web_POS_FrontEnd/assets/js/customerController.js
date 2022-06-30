@@ -162,40 +162,9 @@ $("#txtCustomerSalary").keyup(function(){
 
 
 
-$("#search").keyup(function(event){
-  var searchId=$("#search").val();
-  var responces=seachCustomer(searchId);
-
-  if(event.key=="Enter"){
-   
-    if(responces){
-      $("#txtCustomerId").val(responces.getCusId());
-        $("#txtCustomerName").val(responces.getCusName());
-        $("#txtCustomerAddress").val(responces.getCusAddress());
-        $("#txtCustomerSalary").val(responces.getCusSalary());
-
-    }else{
-     // alert("hi");
-    }
 
 
-        
-        // console.log("hi");
-      
-    
-  }
-})
-
-
-function seachCustomer(id){
-  for(let i=0;i<CustomerDB.length;i++){
-    if(CustomerDB[i].getCusId()==id){
-      return CustomerDB[i];
-    }
-  }
-}
-
-
+// ----Save------
 
 function saveCustomer(){
 
@@ -224,6 +193,44 @@ function  customerFirstLoad(){
 
 
 }
+
+
+
+
+// ----Search------
+
+$("#txtCustomerId").on("keypress", function (e) {
+    if (e.key == "Enter") {
+        alert("search enter ok");
+        seachCustomer();
+    }
+});
+
+
+function seachCustomer(){
+    var customerId = $("#txtCustomerId").val();
+    $.ajax({
+        url:"http://localhost:8080/Spring_Web_POS_BackEnd_war/Customer" + "/" + customerId,
+        method:"GET",
+        success:function (search){
+            if(search.code==200){
+                var customer=search.data;
+
+                $("#txtCustomerId").val(customer.custID);
+                $("#txtCustomerName").val(customer.custName);
+                $("#txtCustomerAddress").val(customer.custAddress);
+                $("#txtCustomerSalary").val(customer.salary);
+            }
+
+        },error: function (ob) {
+            alert(ob.responseJSON.message);
+        }
+    })
+
+}
+
+
+
 
 
 // ----delete------
