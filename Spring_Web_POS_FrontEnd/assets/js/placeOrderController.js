@@ -5,7 +5,7 @@ $("#genarateId").text(genarateOrderId());
 
 function genarateOrderId(){
     $.ajax({
-        //url: "http://localhost:8080/pos/order",
+        url: "http://localhost:8080/Spring_Web_POS_BackEnd_war/PurchaseOrder",
         method:"GET",
         success(genarate){
             try {
@@ -65,15 +65,15 @@ function loadCusIDS(){
     $("#cmbCusId").empty();
     var ids=document.getElementById("cmbCusId");
     $.ajax({
-        //url: "http://localhost:8080/pos/customer",
+        url: "http://localhost:8080/Spring_Web_POS_BackEnd_war/Customer",
         method:"GET",
         success(cusId){
-            // for (var i of cusId.data) {
-            //     var opt=document.createElement("option");
-            //     opt.value=i.id;
-            //     opt.text=i.id;
-            //     ids.appendChild(opt);
-            // }
+            for (var i of cusId.data) {
+                var opt=document.createElement("option");
+                opt.value=i.custID;
+                opt.text=i.custID;
+                ids.appendChild(opt);
+            }
         }
     });
 }
@@ -85,10 +85,10 @@ $("#cmbCusId").click(function() {
         method: "GET",
         success(cusId) {
             for (const i of cusId.data) {
-                if (customerId == i.id) {
+                if (customerId == i.custID) {
 
-                    $("#txtCusName").val(i.name);
-                    $("#txtCusAddress").val(i.address);
+                    $("#txtCusName").val(i.custName);
+                    $("#txtCusAddress").val(i.custAddress);
                     $("#txtCusSalary").val(i.salary);
                 }
             }
@@ -106,15 +106,15 @@ function loadItemID() {
     $("#cmbItemCode").empty();
     var ids = document.getElementById("cmbItemCode");
     $.ajax({
-        //url: "http://localhost:8080/pos/item",
+        url: "http://localhost:8080/Spring_Web_POS_BackEnd_war/Item",
         method: "GET",
         success(responce) {
-            // for (var i of responce.data) {
-            //     var opt = document.createElement("option");
-            //     opt.value = i.itemCode;
-            //     opt.text = i.itemCode;
-            //     ids.appendChild(opt);
-            // }
+            for (var i of responce.data) {
+                var opt = document.createElement("option");
+                opt.value = i.itemCode;
+                opt.text = i.itemCode;
+                ids.appendChild(opt);
+            }
         }
     });
 }
@@ -205,6 +205,7 @@ function addToCart() {
     }
 
     cartDAta = {
+        "orderId":orderId,
         "itemCode1": itemCode1,
         "itName1": itName1,
         "orderQty1": orderQty1,
@@ -254,23 +255,46 @@ function saveConfirmOrder() {
     let date = $("#iDate").val();
     let time = $("#selectTime").val();
     let cusId = $("#cmbCusId").val();
+    let cusName = $("#txtCusName").val();
+    let cusSalary = $("#txtCusSalary").val();
+    let cusAddress = $("#txtCusAddress").val();
     let itemCode1 = $("#cmbItemCode").val();
     let itemQty = $("#txtOrderQtyItem").val();
     let itemDiscount = $("#txtDiscount").val();
     let allTotal = $("#totalLbl").text();
 
 
+    var orderDetalsDb = new Array();
+
+    for(var i of crats){
+        orderDetails = {
+            "orderID":i.orderId,
+            "itemCode":i.itemCode1,
+            "orderQty":i.orderQty1,
+            "discount":i.discounts,
+            "balance":i.total2
+        }
+        orderDetalsDb.push(orderDetails);
+
+    }
+
+
     var orderDb = {
-        "oId": order_Id,
-        "oDate": date,
-        "oTime": time,
-        "cId": cusId,
-        "crat": crats
+        orderID:order_Id,
+        orderDate:date,
+        orderTime:time,
+        customer:{
+            "CustID":cusId,
+            "CustName":cusName,
+            "CustAddress":cusAddress,
+            "Salary":cusSalary
+        },
+        orderDetailsDTO:orderDetalsDb
     }
 
 
     $.ajax({
-        //url: "http://localhost:8080/pos/order",
+       url: "http://localhost:8080/Spring_Web_POS_BackEnd_war/PurchaseOrder",
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify(orderDb),
