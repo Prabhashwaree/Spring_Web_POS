@@ -24,8 +24,8 @@ public class ItemRepoTest {
 
     @Test
     public void saveItem(){
-        Item item1 = new Item("I001", "blouse", 5000, "2");
-        Item item2 = new Item("I002", "Tshirt", 850, "5");
+        Item item1 = new Item("I001", "blouse", 5000, 2);
+        Item item2 = new Item("I002", "Tshirt", 850, 5);
         itemRepo.save(item1);
         itemRepo.save(item2);
     }
@@ -38,7 +38,7 @@ public class ItemRepoTest {
     @Test
     public void updateItem(){
         if (itemRepo.existsById("I002")) {
-            Item item2 = new Item("I002", "saree", 1500, "5");
+            Item item2 = new Item("I002", "saree", 1500, 5);
             itemRepo.save(item2);
         }else{
             throw new RuntimeException("No Such Item To Update");

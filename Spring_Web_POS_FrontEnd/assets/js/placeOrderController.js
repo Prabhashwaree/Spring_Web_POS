@@ -81,7 +81,7 @@ function loadCusIDS(){
 $("#cmbCusId").click(function() {
     let customerId = $("#cmbCusId").val();
     $.ajax({
-        url: "http://localhost:8080/pos/customer",
+        url: "http://localhost:8080/Spring_Web_POS_BackEnd_war/Customer",
         method: "GET",
         success(cusId) {
             for (const i of cusId.data) {
@@ -122,7 +122,7 @@ function loadItemID() {
 $("#cmbItemCode").click(function () {
     let itemsCode = $("#cmbItemCode").val();
     $.ajax({
-        //url: "http://localhost:8080/pos/item",
+        url: "http://localhost:8080/Spring_Web_POS_BackEnd_war/Item",
         method: "GET",
         success(responce) {
             for (var i of responce.data) {

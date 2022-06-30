@@ -8,15 +8,18 @@ import lombok.ToString;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity
-@AllArgsConstructor
+
+
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @ToString
+@Entity
 public class Customer {
     @Id
-    private String CustID;
-    private String CustName;
-    private String CustAddress;
-    private double Salary;
+    private String custID;
+    private String custName;
+    private String custAddress;
+    private double salary;
 }
+

@@ -6,29 +6,28 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Entity
 @ToString
 @IdClass(OrderItem_PK.class)
 public class OrderDetails {
     @Id
     private String orderID;
     @Id
-    private String ItemCode;
-    private String orderqty;
+    private String itemCode;
+    private int orderQty;
     private double discount;
-    private double balance;
-
+    private int balance;
 
     @ManyToOne
     @JoinColumn(name = "orderID",referencedColumnName = "orderID",insertable = false,updatable = false)
-    private Order order;
-
-
+    private Orders orders;
+    //Out-verse
     @ManyToOne
-    @JoinColumn(name = "ItemCode",referencedColumnName = "ItemCode",insertable = false,updatable = false)
-    private Item Item;
+    @JoinColumn(name = "itemCode",referencedColumnName = "itemCode",insertable = false,updatable = false)
+    private Item items;
+
+
 }
