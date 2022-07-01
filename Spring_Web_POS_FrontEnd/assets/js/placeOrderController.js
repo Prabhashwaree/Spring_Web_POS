@@ -189,6 +189,7 @@ function addToCart() {
     let itemPrice1 = $("#txtPriceItem").val();
     let qtyOnHand = $("#txtQtyHandItem").val();
     let discounts = $("#txtDiscount").val();
+    let orderId = $("#genarateId").val();
     let total1 = itemPrice1 * orderQty1;
     let total2 = total1;
 
@@ -252,20 +253,19 @@ function loadAllCartTable() {
 
 function saveConfirmOrder() {
     let order_Id = $("#genarateId").text();
-    let date = $("#iDate").val();
-    let time = $("#selectTime").val();
-    let cusId = $("#cmbCusId").val();
-    let cusName = $("#txtCusName").val();
-    let cusSalary = $("#txtCusSalary").val();
-    let cusAddress = $("#txtCusAddress").val();
+    let odate = $("#iDate").val();
+    let otime = $("#selectTime").val();
+    let cId = $("#cmbCusId").val();
+    let cName = $("#txtCusName").val();
+    let salary = $("#txtCusSalary").val();
+    let cAddress = $("#txtCusAddress").val();
     let itemCode1 = $("#cmbItemCode").val();
     let itemQty = $("#txtOrderQtyItem").val();
     let itemDiscount = $("#txtDiscount").val();
     let allTotal = $("#totalLbl").text();
 
 
-    var orderDetalsDb = new Array();
-
+    var orderDetalsDb = new Array
     for(var i of crats){
         orderDetails = {
             "orderID":i.orderId,
@@ -278,16 +278,15 @@ function saveConfirmOrder() {
 
     }
 
-
     var orderDb = {
         orderID:order_Id,
-        orderDate:date,
-        orderTime:time,
+        orderDate:odate,
+        orderTime:otime,
         customer:{
-            "CustID":cusId,
-            "CustName":cusName,
-            "CustAddress":cusAddress,
-            "Salary":cusSalary
+            "custID":cId,
+            "custName":cName,
+            "custAddress":cAddress,
+            "salary":salary
         },
         orderDetailsDTO:orderDetalsDb
     }
