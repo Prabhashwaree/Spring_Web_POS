@@ -1,6 +1,9 @@
 package lk.ijse.springwebpos.service.serviceImpl;
 
 import lk.ijse.springwebpos.dto.OrdersDTO;
+import lk.ijse.springwebpos.entity.Item;
+import lk.ijse.springwebpos.entity.OrderDetails;
+import lk.ijse.springwebpos.entity.OrderItem_PK;
 import lk.ijse.springwebpos.entity.Orders;
 import lk.ijse.springwebpos.repo.ItemRepo;
 import lk.ijse.springwebpos.repo.OrderDetailsRepo;
@@ -32,6 +35,15 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         if (!ordersRepo.existsById(ordersDTO.getOrderID())) {
             ordersRepo.save(orders);
             if(ordersDTO.getOrderDetailsDTO().size()<1)throw new RuntimeException("No items added for the order..!");
+
+
+            //Update the Item-----
+            for(OrderDetails orderDetails:orders.getOrderDetails()){
+                Item item = itemRepo.findById(orderDetails.getItemCode()).get();
+                item.setQty(item.getQty()-orderDetails.getOrderQty());
+                itemRepo.save(item);
+            }
+
         }else {
             throw new RuntimeException("Purchase Order Failed..!, Order ID " + ordersDTO.getOrderID() + " Already Exist.!");
         }
@@ -40,11 +52,37 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     @Override
     public void deleteOrder(String oid) {
-
+        if(ordersRepo.existsById(oid)) {
+            ordersRepo.deleteById(oid);
+        }else {
+            throw new RuntimeException("Delete Order Failed..!, Order ID " + oid + " Not Exist..!");
+        }
     }
 
     @Override
-    public void updateOrder(OrdersDTO entity) {
+    public void updateOrder(OrdersDTO ordersDTO) {
+        if(ordersRepo.existsById(ordersDTO.getOrderID())){
+            Orders orders = modelMapper.map(ordersDTO, Orders.class);
+
+            if(ordersDTO.getOrderDetailsDTO().size()<1)throw new RuntimeException("No items added for the order..!");{
+                for(OrderDetails orderDetails:orders.getOrderDetails()){
+                    Item item = itemRepo.findById(orderDetails.getItemCode()).get();
+                    OrderDetails orderDetails1 = orderDetailsRepo.findById(String.valueOf(new OrderItem_PK(orderDetails.getOrderID(), orderDetails.getItemCode()))).get();
+
+
+                    //Update the Item Qty-------
+                    int newqty=orderDetails.getOrderQty();
+                    int  prevQty = orderDetails1.getOrderQty();
+
+                    if(newqty>prevQty){
+                        
+                    }
+
+                }
+
+
+            }
+        }
 
     }
 

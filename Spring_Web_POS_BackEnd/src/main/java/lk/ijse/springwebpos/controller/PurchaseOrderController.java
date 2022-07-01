@@ -17,7 +17,7 @@ public class PurchaseOrderController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponceUtil getAllPurchaseOrder(){
-        return new ResponceUtil(200,"getAllPurchaseOrder..",null);
+        return new ResponceUtil(200,"getAllPurchaseOrder..",purchaseOrderService.getAllOrders());
     }
 
     @ResponseStatus(HttpStatus.CREATED)
