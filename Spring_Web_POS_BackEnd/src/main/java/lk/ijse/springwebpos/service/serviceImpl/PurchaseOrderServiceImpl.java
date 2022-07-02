@@ -75,13 +75,27 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                     int  prevQty = orderDetails1.getOrderQty();
 
                     if(newqty>prevQty){
-                        
+                        int dif = newqty - prevQty;
+                        item.setQty(item.getQty() - dif);
+
+                    } else if (newqty < prevQty) {
+                        int dif = prevQty - newqty;
+                        item.setQty(item.getQty() + dif);
+
                     }
+                    itemRepo.save(item);
 
                 }
-
-
+                //then delete the old order
+                ordersRepo.deleteById(ordersDTO.getOrderID());
+                //finally update the new order
+                ordersRepo.save(orders);
             }
+
+        }else{
+            throw new RuntimeException("Update Order Failed..!, Order ID " + ordersDTO.getOrderID() + " Not Exist.!");
+
+
         }
 
     }
